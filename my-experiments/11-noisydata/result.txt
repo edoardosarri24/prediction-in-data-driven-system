@@ -1,0 +1,16 @@
+bias.pl sucessfully generated!!!
+bk.pl sucessfully generated!!!
+exs.pl sucessfully generated!!!
+07:41:46 Num. pos examples: 27
+07:41:46 Num. neg examples: 72
+07:41:46 Searching programs of size: 3
+07:41:46 ********************
+07:41:46 New best hypothesis:
+07:41:46 tp:27 fn:0 size:3
+07:41:46 failure(A):- geq(C,501),executionTime_1_2(A,C).
+07:41:46 ********************
+********** SOLUTION **********
+Precision:1.00 Recall:1.00 TP:27 FN:0 TN:72 FP:0 Size:3
+failure(A):- geq(C,501),executionTime_1_2(A,C).
+******************************
+execution time: 2s

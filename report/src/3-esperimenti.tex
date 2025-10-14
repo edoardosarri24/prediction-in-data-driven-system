@@ -143,36 +143,24 @@ Per implementare questi predicati non è stato toccato il file di log ma è stat
 \subsection{Risultati}
 Per capire se quanto supposto funzionasse, in un primo momento sono state considerate solo 10 tracce, di cui 9 fallivano e 1 aveva successo. L'esperimento \href{https://github.com/edoardosarri24/prediction-in-data-driven-system/tree/main/my-experiments/8-executionTime-10traces}{executionTime-10traces} ha dato esattamente la soluzione che ci aspettavamo: \texttt{failure(A):- \\ executionTime\_1\_2(A,C),geq(C,501)}: questo ci dice esattamente che se il tempo di esecuzione del Chunk1.2 (i.e., il secondo del primo task) campiona un valore superiore di 0.5ms allora la traccia fallisce.
 
-\subsection{Complessità}
-La nostra idea funziona, ma dobbiamo testarla su un dataset di tracce maggiore.
-
-Nell'esperimento \href{https://github.com/edoardosarri24/prediction-in-data-driven-system/tree/main/my-experiments/9-executionTime-100traces}{executionTime-100traces} sono state testate 100 tracce, di cui 18 falliscono e 82 hanno successo. In questo caso il sistema trova la soluzione \texttt{failure(A):- executionTime\_1\_2(A,C),geq(C,501).}, che è ancora esattamente quella attesa.
-
-Se però usiamo lo stesso numero di tracce, ma il numero di fallimenti, e quindi di esempi da spiegare, aumenta, allora il timeout scatta e non troviamo nessuna soluzione. Queste è infatti quello successo nell'esperimento \href{https://github.com/edoardosarri24/prediction-in-data-driven-system/tree/main/my-experiments/10-executionTime-100traces-morefailures}{executionTime-100traces-morefailures}, dove sono le tracce che falliscono sono 27.
-
-L'ultimo esperimento ci fa invece capire che il sistema fallisce quando il numero di tracce da spiegare è troppo elevato. Nell'esperimento \href{https://github.com/edoardosarri24/prediction-in-data-driven-system/tree/main/my-experiments/11-executionTime-1000traces}{executionTime-1000traces} sono state usate 1000 tracce, ma di cui solo 14 falliscono. In questo caso la soluzione \texttt{failure(A):- executionTime\_1\_2(A,C),geq(C,1000)} è esattamente quella attesa; il valore non è più 501 come negli esperimento con meno esempi, ma comunque corretta e giusta.
-
 \subsection{Isolamento predicati corretti}
 \label{subsec:preempt}
 Vogliamo vedere adesso se il sistema riesce a isolare i predicati che davvero spiegano un fallimento anche se ne sono presenti altri non necessari. È stato aggiunto il predicato sulla preemption che un task può subire, esplicito nel file di log ma non incluso fino a questo momento.
 
-Il risultato dell'esperimento \href{https://github.com/edoardosarri24/prediction-in-data-driven-system/tree/main/my-experiments/12-preemption}{preemption} mostra ancora \texttt{failure(A):- \\ geq(C,501),executionTime\_1\_2(A,C)}, esattamente la soluzione corretta.
+Il risultato dell'esperimento \href{https://github.com/edoardosarri24/prediction-in-data-driven-system/tree/main/my-experiments/10-preemption}{preemption} mostra ancora \texttt{failure(A):- \\ geq(C,501),executionTime\_1\_2(A,C)}, esattamente la soluzione corretta.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Motivazione ignota}
-\label{sec:unknown}
-A questo punto possiamo fare l'esperimento \href{https://github.com/edoardosarri24/prediction-in-data-driven-system/tree/main/my-experiments/13-unknown}{unknown}, cioè l'esperimento di cui non conosciamo a priori la motivazione del fallimento delle tracce.
+\section{Noisy data}
+Tra tutti quelli eseguiti, c'è stato un esperimento che ha mostrato quando sistemi ILP di questo tipo siano suscettibili a dati rumorosi.
 
-\subsection{Definizione}
-Il modello scelto è semplice, in modo che possiamo valutare la soluzione del sistema. Il modello di taskset ha la seguente struttura:
-\begin{itemize}
-    \item Task1: periodo e deadline di 3ms. Il primo chunk esegue sempre per 1ms, il secondo campiona 0.5ms con probabilità del 99.9\% e 0.7ms con probabilità complementare.
-    \item Task2: periodo e deadline di 5ms. L'unico chunk ha tempo di esecuzione di 2ms.
-\end{itemize}
+Nell'esperimento \href{https://github.com/edoardosarri24/prediction-in-data-driven-system/blob/main/my-experiments/11-noisydata/}{noisydata} era stata generata una traccia errata, il cui finale è mostrato in Figura~\ref{fig:noisydatatrace}. Possiamo notare come il Chunk1.2 campioni un tempo di esecuzioni di 1ms, ma la traccia ha comunque successo. Riguardando il codice del simulatore che genera le treccia, questo comportamento è dovuto ad un errore di progettazione sbagliato relativo al momento in cui viene osservata la deadline miss.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{images/3-esperimenti/noisydatatrace.pdf}
+    \caption{Trace of the noisydata experiment.}
+    \label{fig:noisydatatrace}
+\end{figure}
 
-Seguendo quanto appreso dagli esperimenti precedenti riguardo alla complessità che Numsynth può gestire, abbiamo generato 100 tracce ognuna della durata massima di 100ms. Solamente circa l'1\% di tracce termina con un fallimento, cioè abbiamo 8 tracce da spiegare.
+\myskip
 
-\subsection{Risultati}
-Come possiamo osservare da file di \href{https://github.com/edoardosarri24/prediction-in-data-driven-system/blob/main/my-experiments/13-unknown/result.txt}{risultati}, il sistema non riesce a trovare una soluzione. Più nello specifico va in overflow a causa di una ricorsione troppo elevata, fermandosi a regole di lunghezza cinque.
-
-La motivazione più plausibile è che, come già osservato per gli esperimenti precedenti, i predicati che al momento sono stati forniti non siano sufficienti.
+Non essendo lo scopo del progetto quello di correggere il simulatore, la trace32 in questione è stata eliminata dal file di log a mano e l'esperimento è stato rieseguito. Il risultato è quello atteso:\texttt{failure(A):- geq(C,501),executionTime\_1\_2(A,C).}.
