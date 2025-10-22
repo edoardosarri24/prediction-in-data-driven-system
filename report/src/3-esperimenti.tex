@@ -122,6 +122,7 @@ Da ora in poi eseguiremo gli esperimenti senza moltiplicazioni: non ci sono moti
 Inoltre non considereremo più il successo di una traccia, ma cercheremo solo di spiegarne il fallimento. Per fare questo dobbiamo aggiungere dei predicati che il sistema possa usare.
 
 \subsection{Modello}
+\label{subsec:model}
 L'obiettivo in questo momento è cercare di capire se il sistema impara una regola corretta: ci serve un modello di taskset di cui sappiamo a priori il motivo del fallimento. Il taskset considerato ha le seguenti caratteristiche:
 \begin{itemize}
     \item Task1: periodo e deadline di 2ms. Il primo chunk esegue sempre per 0.5ms, il secondo campiona 0.5ms con probabilità del 95\%, 1ms con probabilità complementare.
@@ -156,7 +157,7 @@ Tra tutti quelli eseguiti, c'è stato un esperimento che ha mostrato quando sist
 Nell'esperimento \href{https://github.com/edoardosarri24/prediction-in-data-driven-system/blob/main/my-experiments/11-noisydata/}{noisydata} era stata generata una traccia errata, il cui finale è mostrato in Figura~\ref{fig:noisydatatrace}. Possiamo notare come il Chunk1.2 campioni un tempo di esecuzioni di 1ms, ma la traccia ha comunque successo. Riguardando il codice del simulatore che genera le treccia, questo comportamento è dovuto ad un errore di progettazione sbagliato relativo al momento in cui viene osservata la deadline miss.
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{images/3-esperimenti/noisydatatrace.pdf}
+    \includegraphics[width=.6\textwidth]{images/3-esperimenti/noisydatatrace.pdf}
     \caption{Trace of the noisydata experiment.}
     \label{fig:noisydatatrace}
 \end{figure}
@@ -164,3 +165,26 @@ Nell'esperimento \href{https://github.com/edoardosarri24/prediction-in-data-driv
 \myskip
 
 Non essendo lo scopo del progetto quello di correggere il simulatore, la trace32 in questione è stata eliminata dal file di log a mano e l'esperimento è stato rieseguito. Il risultato è quello atteso:\texttt{failure(A):- geq(C,501),executionTime\_1\_2(A,C).}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Somma}
+In questa sezione vogliamo generare un dataset di tracce dove la motivazione del fallimento è data dalla somma di una qualche caratteristica del taskset.
+
+Il motivo di questo interesse sta nelle potenzialità che un ILP con ragionamento numerico può avere rispetto ad altri modelli di explainable AI: gli operatori booleani relazionali (i.e, $>$, $<$, $\geq$, $\leq$) possono essere appresi anche da un albero di decisione (modello interpretabile); se nei dati ci sono invece delle relazioni da operatori additivi come la somma, l'albero di decisione fa più fatica.
+
+\subsection{Modello di taskset}
+Il modello di taskset usato in questo scenario è molto simile a quello descritto nella Sezione~\ref{subsec:model} e mostrato in Figura~\ref{fig:tasksetmodel}, dove il fallimento era dovuto al campionamento dell'execution time del Chunk1.2 (secondo chunk del primo task) di 1ms invece che di 0.5ms.
+
+Per forzare il sistema a spiegare il fallimento con una somma, in questo esperimento il Task1 ha tre chunk: il primo ha un tempo di esecuzione sempre di 0.5ms; il secondo e il terzo lo campionano da una distribuzione uniforme, con l'idea che se il tempo di esecuzione complessivo dei due chunk è maggiore di 0.5ms allora la traccia fallisce, perché il Task2 non riesce a completare entro la propria deadline.
+
+\subsection{Modifica representation bias}
+Il primo esperimento eseguito non ha trovato nessa regola, facendo scattare il timeout per predicati di lunghezza 5.
+
+Ragionando sul representation bias il problema potevare essere dovuto al fatto che la somma dei due campionamenti non solo doveva essere maggiore di 0.5ms, ma doveva esserlo anche nello stesso rilascio del Task1: se il Chunk1.2 campiona un valore molto alto e il Chunk1.3 un valore molto basso, dove la somma è minore di 0.5ms e in un rilascio successivo avviene il viceversa, allora in questo caso non si ha fallimento; se invece Chunk1.2 e Chunk1.3 campionano consucutiamente du tempi la cui somma è maggiore di 0.5ms, allora la traccia fallisce perché il Task2 non ha tempoi di esegurie.
+
+Il representation bias fino a questo momento era esattamente quello definito per gli esperimenti precedenti. Per aumentare il potere descrittivo del sistema e cercare che a
+
+Per includere l'informazione della release del task è stata aumentata l'arietà dei predicati in modo che venga incluso anche un id incrementale (che si resetta all'inizio di ogni traccia) che indica il numero di rilascio.
+
+\subsection{Risultati}
+Nonostante aver aumentato la Descrittività dei predicati

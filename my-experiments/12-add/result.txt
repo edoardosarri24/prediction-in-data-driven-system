@@ -1,0 +1,6 @@
+bias.pl sucessfully generated!!!
+bk.pl sucessfully generated!!!
+exs.pl sucessfully generated!!!
+11:31:58 Num. pos examples: 2
+11:31:58 Num. neg examples: 8
+execution time: 428s
