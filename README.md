@@ -7,14 +7,14 @@
   - [Clingo](https://potassco.org/clingo/) (version 5.5.0 or above)
 - Environment Setup
     ```bash
-    conda env create -f environment.yml
+    conda env create -f environment.yaml
     ```
 
 ### running
-To run experiments with your own data, create a new folder in the `my-experiments` directory containing your `bias.pl` file and your `script.py` (you can start from my one). Then you must execute the commands below.
+To run experiments with your own data, create a new folder `my-floder´ in the `my-experiments` directory containing your `bias.pl` file and your `script.py` (you can start from my one). Then you must execute the commands below.
 ```bash
 conda activate numsynth
-./numsynth.sh <folder-name>
+./numsynth.sh <my-folder>
 ```
 
 ### Documentation

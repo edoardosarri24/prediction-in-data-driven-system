@@ -180,11 +180,9 @@ Per forzare il sistema a spiegare il fallimento con una somma, in questo esperim
 \subsection{Modifica representation bias}
 Il primo esperimento eseguito non ha trovato nessa regola, facendo scattare il timeout per predicati di lunghezza 5.
 
-Ragionando sul representation bias il problema potevare essere dovuto al fatto che la somma dei due campionamenti non solo doveva essere maggiore di 0.5ms, ma doveva esserlo anche nello stesso rilascio del Task1: se il Chunk1.2 campiona un valore molto alto e il Chunk1.3 un valore molto basso, dove la somma è minore di 0.5ms e in un rilascio successivo avviene il viceversa, allora in questo caso non si ha fallimento; se invece Chunk1.2 e Chunk1.3 campionano consucutiamente du tempi la cui somma è maggiore di 0.5ms, allora la traccia fallisce perché il Task2 non ha tempoi di esegurie.
+Ragionando sul representation bias il problema potevare essere dovuto al fatto che la somma dei due campionamenti non solo doveva essere maggiore di 0.5ms, ma doveva esserlo anche nello stesso rilascio del Task1: se il Chunk1.2 campiona un valore molto alto e il Chunk1.3 un valore molto basso, dove la somma è minore di 0.5ms e in un rilascio successivo avviene il viceversa, allora in questo caso non si ha fallimento; se invece Chunk1.2 e Chunk1.3 campionano consecutivamente due tempi la cui somma è maggiore di 0.5ms, allora la traccia fallisce perché il Task2 non ha tempi di esecuzione.
 
-Il representation bias fino a questo momento era esattamente quello definito per gli esperimenti precedenti. Per aumentare il potere descrittivo del sistema e cercare che a
-
-Per includere l'informazione della release del task è stata aumentata l'arietà dei predicati in modo che venga incluso anche un id incrementale (che si resetta all'inizio di ogni traccia) che indica il numero di rilascio.
+Il representation bias fino a questo momento era esattamente quello definito per gli esperimenti precedenti. Per aumentare il potere descrittivo del sistema e cercare di apprendere la relazione tra due chunk che eseguono nello stesso rilascio, è stata aumentata l'arietà dei predicati in modo che venga incluso anche un id incrementale (che si resetta all'inizio di ogni traccia) che indica il numero di rilascio.
 
 \subsection{Risultati}
-Nonostante aver aumentato la Descrittività dei predicati
+Nonostante aver aumentato la descrittività dei predicati, il sistema non è riuscito a trovare la regola corretta. Il sistema apprende, come si vede nei risultati dell'esperimento \href{https://github.com/edoardosarri24/prediction-in-data-driven-system/blob/main/my-experiments/12-add/result.txt}{add}, la soluzione \texttt{failure(A):- finish\_1\_3(A,D,C),execute\_2\_1(A,D,C),geq(C,1001)}, che però non è quella desiderata.

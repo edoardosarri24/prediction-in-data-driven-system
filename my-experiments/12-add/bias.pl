@@ -1,5 +1,4 @@
 %%% predicate %%%
-% added 1 to the ariety of each predicate.
 head_pred(failure,1).
 body_pred(release_1,3).
 body_pred(release_2,3).
@@ -19,18 +18,23 @@ body_pred(executionTime_1_3,3).
 body_pred(executionTime_2_1,3).
 
 %%% type %%%
-% types help to reduce the training time
-type(failure,(trace,)). % with unary predicate use che "," after the type.
-type(release_1,(trace, release_1, int)).
-type(release_2,(trace, release_2, int)).
-type(complete,(trace, release_1, int)).
-type(complete,(trace, release_2, int)).
-type(execute,(trace, release_1, int)).
-type(execute,(trace, release_2, int)).
-type(finish,(trace, release_1, int)).
-type(finish,(trace, release_2, int)).
-type(executionTime,(trace, release_1, int)).
-type(executionTime,(trace, release_2, int)).
+type(failure,(trace,)).
+type(release_1,(trace,release_number,int)).
+type(release_2,(trace,release_number,int)).
+type(complete_1,(trace,release_number,int)).
+type(complete_2,(trace,release_number,int)).
+type(execute_1_1,(trace,release_number,int)).
+type(execute_1_2,(trace,release_number,int)).
+type(execute_1_3,(trace,release_number,int)).
+type(execute_2_1,(trace,release_number,int)).
+type(finish_1_1,(trace,release_number,int)).
+type(finish_1_2,(trace,release_number,int)).
+type(finish_1_3,(trace,release_number,int)).
+type(finish_2_1,(trace,release_number,int)).
+type(executionTime_1_1,(trace,release_number,int)).
+type(executionTime_1_2,(trace,release_number,int)).
+type(executionTime_1_3,(trace,release_number,int)).
+type(executionTime_2_1,(trace,release_number,int)).
 
 %%% direction %%%
 directions(failure,(in,)).
@@ -61,4 +65,3 @@ directions(add,(in,in,out)).
 
 %%% bounds %%%
 bounds(geq,1,(0,2000)).
-bounds(add,1,(0,2000)).

@@ -1,12 +1,12 @@
 :-style_check(-discontiguous). % dont considere the discountinuity of clauses
 
-neg(failure(trace0)).
-neg(failure(trace1)).
-neg(failure(trace2)).
-neg(failure(trace3)).
-pos(failure(trace4)).
-neg(failure(trace5)).
-neg(failure(trace6)).
-neg(failure(trace7)).
-pos(failure(trace8)).
-neg(failure(trace9)).
+neg(failure(trace_0)).
+neg(failure(trace_1)).
+neg(failure(trace_2)).
+neg(failure(trace_3)).
+pos(failure(trace_4)).
+neg(failure(trace_5)).
+neg(failure(trace_6)).
+neg(failure(trace_7)).
+pos(failure(trace_8)).
+neg(failure(trace_9)).

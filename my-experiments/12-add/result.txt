@@ -1,6 +1,18 @@
 bias.pl sucessfully generated!!!
 bk.pl sucessfully generated!!!
 exs.pl sucessfully generated!!!
-11:31:58 Num. pos examples: 2
-11:31:58 Num. neg examples: 8
-execution time: 428s
+10:43:18 Num. pos examples: 2
+10:43:18 Num. neg examples: 8
+10:43:19 Searching programs of size: 3
+10:43:44 Searching programs of size: 4
+10:44:38 ********************
+10:44:38 New best hypothesis:
+10:44:38 tp:1 fn:1 size:4
+10:44:38 failure(A):- execute_2_1(A,D,C),finish_1_3(A,D,C),geq(C,1001).
+10:44:38 ********************
+10:54:02 TIMEOUT OF 600 SECONDS EXCEEDED
+********** SOLUTION **********
+Precision:1.00 Recall:0.50 TP:1 FN:1 TN:8 FP:0 Size:4
+failure(A):- finish_1_3(A,D,C),execute_2_1(A,D,C),geq(C,1001).
+******************************
+execution time: 645s

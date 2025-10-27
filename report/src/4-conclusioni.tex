@@ -1,0 +1,16 @@
+\chapter{Conclusioni}
+Concludiamo questa relazione sul progetto con delle brevi osservazioni sulle conseguenze che il sistema Numsynth ha mostrato nei vari esperimenti, descritti precedentemente nel Capitolo~\ref{cap:esperimenti}.
+
+\myskip
+
+Numsynth permette di introdurre il ragionamento numerico in un ILP system. Questo nelle situazioni dove il tempo è fondamentale per apprendere qualche relazione, è una cosa fondamentale. Un altro vantaggio è quello che, quando impara le regole corrette, lo fa isolando bene i predicati che sono effettivamente necessari alla spiegazione, senza includere in essa predicati che possono essere evitati.
+
+\myskip
+
+Il sistema è estremamente sensibile alla presenza dei corretti predicati. La sensazione è che riesca a imparare buone regole se e solo se sono stati inclusi nel representation language i predicati che spiegano effettivamente i fallimenti delle tracce. Se questi predicati non ci sono, o ne mancano anche solo alcuni, il sistema non riesce a trovare una regola che spieghi, anche solo parzialmente, il problema.
+
+Questo comportamento è ovviamente corretto dal parte del sistema. Non possiamo però non osservare che se per tracce semplici e brevi questi predicati possono essere trovati a mano e indicati al sistema, quando partiamo da dati molto complessi e abbiamo molti eventi e molte combinazioni, allora il problema può diventare non risolvibile.
+
+\myskip
+
+Un ulteriore limite di Numsynth, forse anche più grave del precedente, è la sua incapacità apprendere da dati rumorosi. Quando la background knowledge ha dei falsi positivi, cioè esempi che devono essere spiegati ma che in realtà non confermano la regola, allora la regola non viene trovata. Un ILP system infatti richiede che che tutti gli esempi positivi siano coperti dalla regola; in questo caso vorremmo che la spiegazione non considerasse questi dati rumorosi.
