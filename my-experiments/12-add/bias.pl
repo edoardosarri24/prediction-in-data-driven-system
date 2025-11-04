@@ -64,4 +64,4 @@ type(add,(int,int,int)).
 directions(add,(in,in,out)).
 
 %%% bounds %%%
-bounds(geq,1,(0,2000)).
+bounds(geq,1,(0,1100)).
