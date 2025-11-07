@@ -17,6 +17,8 @@ def augment_bias():
     # generate new bias
     try:
         with open(base_bias_path, 'r') as file:
+            max_chunk=0
+            this_chunk=0
             for line in file:
                 line = line.strip()
                 # release line
@@ -27,7 +29,16 @@ def augment_bias():
                 # task line
                 elif re.search(r'\btask\b', line):
                     for task in sorted(list(tasks_chunks.keys())):
-                        new_line = line.replace('task', f'task{task}')
+                        new_line = re.sub(r"\btask\b", f"task{task}", line)
+                        bias_elements.append(new_line)
+                # chunk line
+                elif re.search(r'\bchunk\b', line):
+                    for task in sorted(list(tasks_chunks.keys())):
+                        this_chunk = len(list(tasks_chunks[task]))
+                        if (this_chunk > max_chunk):
+                            max_chunk = this_chunk
+                    for chunk in range (max_chunk):
+                        new_line = re.sub(r"\bchunk\b", f"chunk{chunk}", line)
                         bias_elements.append(new_line)
                 # complete line
                 elif 'complete' in line:
@@ -105,9 +116,9 @@ def generate_bk_exs():
                         time = int(float(time)*1000) # time in microseconds
                         task_id = match.group(2)
                         release_number[task_id] += 1
-                        bk_element = (f'task{task_id}(trace{trace_id},releaseNumber{release_number[task_id]}_trace{trace_id}).')
+                        bk_element = (f'task{task_id}(trace{trace_id},releaseNumber{release_number[task_id]}_trace{trace_id}_task{task_id}).')
                         bk_elements.append(bk_element)
-                        bk_element = (f'release_task{task_id}(releaseNumber{release_number[task_id]}_trace{trace_id}, {time}).')
+                        bk_element = (f'release_task{task_id}(releaseNumber{release_number[task_id]}_trace{trace_id}_task{task_id}, {time}).')
                         bk_elements.append(bk_element)
                 # complete line
                 if 'complete' in line:
@@ -116,7 +127,7 @@ def generate_bk_exs():
                         time = match.group(1)
                         time = int(float(time)*1000) # time in microseconds
                         task_id = match.group(2)
-                        bk_element = (f'complete_task{task_id}(releaseNumber{release_number[task_id]}_trace{trace_id}, {time}).')
+                        bk_element = (f'complete_task{task_id}(releaseNumber{release_number[task_id]}_trace{trace_id}_task{task_id}, {time}).')
                         bk_elements.append(bk_element)
                 # execute line
                 if 'execute' in line:
@@ -126,7 +137,9 @@ def generate_bk_exs():
                         time = int(float(time)*1000) # time in microseconds
                         task_id = match.group(2)
                         chunk_id = match.group(3)
-                        bk_element = (f'execute_task{task_id}_chunk{chunk_id}(releaseNumber{release_number[task_id]}_trace{trace_id}, {time}).')
+                        bk_element = (f'chunk{chunk_id}(releaseNumber{release_number[task_id]}_trace{trace_id}_task{task_id}, releaseNumber{release_number[task_id]}_trace{trace_id}_task{task_id}_chunk{chunk_id}).')
+                        bk_elements.append(bk_element)
+                        bk_element = (f'execute_task{task_id}_chunk{chunk_id}(releaseNumber{release_number[task_id]}_trace{trace_id}_task{task_id}_chunk{chunk_id}, {time}).')
                         bk_elements.append(bk_element)
                         executionTimes[(trace_id, task_id, chunk_id)] = time
                 # finish line
@@ -137,10 +150,10 @@ def generate_bk_exs():
                         time = int(float(time)*1000) # time in microseconds
                         task_id = match.group(2)
                         chunk_id = match.group(3)
-                        bk_element = (f'finish_task{task_id}_chunk{chunk_id}(releaseNumber{release_number[task_id]}_trace{trace_id}, {time}).')
+                        bk_element = (f'finish_task{task_id}_chunk{chunk_id}(releaseNumber{release_number[task_id]}_trace{trace_id}_task{task_id}_chunk{chunk_id}, {time}).')
                         bk_elements.append(bk_element)
                         executionTime = time - executionTimes[(trace_id, task_id, chunk_id)]
-                        bk_element = (f"executionTime_task{task_id}_chunk{chunk_id}(releaseNumber{release_number[task_id]}_trace{trace_id}, {executionTime}).")
+                        bk_element = (f"executionTime_task{task_id}_chunk{chunk_id}(releaseNumber{release_number[task_id]}_trace{trace_id}_task{task_id}_chunk{chunk_id}, {executionTime}).")
                         bk_elements.append(bk_element)
     # exception handling
     except FileNotFoundError:

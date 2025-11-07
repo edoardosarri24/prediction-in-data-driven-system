@@ -1,0 +1,53 @@
+bias.pl sucessfully generated!!!
+bk.pl sucessfully generated!!!
+exs.pl sucessfully generated!!!
+23:47:08 Max rules: 1
+23:47:08 Max vars: 9
+23:47:08 Max body: 10
+23:47:08 Num. pos examples: 2
+23:47:08 Num. neg examples: 8
+23:47:08 Program 0:
+23:47:08 failure(A):- task2(A,B),task1(A,B).
+23:47:08 Searching programs of size: 3
+23:47:09 Program 1:
+23:47:09 failure(A):- task1(A,D),complete_task2(D,C),geq(C,B).
+23:47:09 Searching programs of size: 4
+23:47:09 Program 2:
+23:47:09 failure(A):- geq(C,B),complete_task2(D,C),task2(A,D).
+23:47:11 Program 3:
+23:47:11 failure(A):- release_task1(D,C),task2(A,D),geq(C,B).
+23:47:11 Program 4:
+23:47:11 failure(A):- complete_task1(D,C),task2(A,D),geq(C,B).
+23:47:11 Program 5:
+23:47:11 failure(A):- task2(A,D),release_task2(D,C),geq(C,B).
+23:47:13 Program 6:
+23:47:13 failure(A):- geq(C,B),task1(A,D),complete_task1(D,C).
+23:47:13 Program 7:
+23:47:13 failure(A):- task1(A,D),geq(C,B),release_task2(D,C).
+23:47:13 Program 8:
+23:47:13 failure(A):- release_task1(D,C),geq(C,B),task1(A,D).
+23:47:18 Program 9:
+23:47:18 failure(A):- task1(A,B),chunk1(B,C),chunk2(B,C).
+23:47:18 Program 10:
+23:47:18 failure(A):- task1(A,B),chunk2(B,C),chunk0(B,C).
+Traceback (most recent call last):
+  File "/Users/edoardosarri/Documents/prediction-in-data-driven-system/numsynth/popper.py", line 8, in <module>
+    prog, score, stats = learn_solution(settings)
+                         ~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/edoardosarri/Documents/prediction-in-data-driven-system/numsynth/popper/loop.py", line 263, in learn_solution
+    timeout(settings, popper, (settings,), timeout_duration=int(settings.timeout),)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/edoardosarri/Documents/prediction-in-data-driven-system/numsynth/popper/util.py", line 86, in timeout
+    result = func(*args, **kwargs)
+  File "/Users/edoardosarri/Documents/prediction-in-data-driven-system/numsynth/popper/loop.py", line 92, in popper
+    instantiated_programs, properties = tester.test_prog(prog, selector.solution_found, settings=settings)
+                                        ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/edoardosarri/Documents/prediction-in-data-driven-system/numsynth/popper/tester.py", line 124, in test_prog
+    pos_covered = frozenset(next(self.prolog.query('pos_covered(Xs)'))['Xs'])
+                            ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/miniconda3/envs/numsynth/lib/python3.13/site-packages/pyswip/prolog.py", line 171, in __call__
+    raise PrologError(
+    ...<10 lines>...
+    )
+pyswip.prolog.PrologError: Caused by: 'pos_covered(Xs)'. Returned: 'error(existence_error(procedure, /(chunk0, 2)), context(/(failure, 1), _7816))'.
+execution time: 10s

@@ -1,0 +1,1 @@
+failures(A) :- task1(A,B), release_task1(B,C), chunk2(B,D), chunk3(B,E), executionTime_task1_chunk2(D,F), executionTime_task1_chunk3(E,G), add(F,G,H), gt(H,500).
