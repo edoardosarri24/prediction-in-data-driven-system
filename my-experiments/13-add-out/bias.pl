@@ -4,9 +4,9 @@ body_pred(task1, 2).
 body_pred(task2, 2).
 body_pred(release_task1, 2).
 body_pred(release_task2, 2).
-body_pred(chunk0, 2).
 body_pred(chunk1, 2).
 body_pred(chunk2, 2).
+body_pred(chunk3, 2).
 body_pred(executionTime_task1_chunk1, 2).
 body_pred(executionTime_task1_chunk2, 2).
 body_pred(executionTime_task1_chunk3, 2).
@@ -26,9 +26,9 @@ body_pred(finish_task2_chunk1, 2).
 type(failure,(trace,)).
 type(task1,(trace, releaseNumber_trace_task)).
 type(task2,(trace, releaseNumber_trace_task)).
-type(chunk0,(releaseNumber_trace_task, releaseNumber_trace_task_chunk)).
 type(chunk1,(releaseNumber_trace_task, releaseNumber_trace_task_chunk)).
 type(chunk2,(releaseNumber_trace_task, releaseNumber_trace_task_chunk)).
+type(chunk3,(releaseNumber_trace_task, releaseNumber_trace_task_chunk)).
 type(release_task1,(releaseNumber_trace_task,int)).
 type(release_task2,(releaseNumber_trace_task,int)).
 type(executionTime_task1_chunk1,(releaseNumber_trace_task_chunk, int)).
@@ -50,22 +50,25 @@ type(finish_task2_chunk1,(releaseNumber_trace_task_chunk, int)).
 directions(failure, (in,)).
 directions(task1, (in,in)).
 directions(task2, (in,in)).
-directions(release_task1, (in,in)).
-directions(release_task2, (in,in)).
-directions(executionTime_task1_chunk1, (in,in)).
-directions(executionTime_task1_chunk2, (in,in)).
-directions(executionTime_task1_chunk3, (in,in)).
-directions(executionTime_task2_chunk1, (in,in)).
-directions(complete_task1, (in,in)).
-directions(complete_task2, (in,in)).
-directions(execute_task1_chunk1, (in,in)).
-directions(execute_task1_chunk2, (in,in)).
-directions(execute_task1_chunk3, (in,in)).
-directions(execute_task2_chunk1, (in,in)).
-directions(finish_task1_chunk1, (in,in)).
-directions(finish_task1_chunk2, (in,in)).
-directions(finish_task1_chunk3, (in,in)).
-directions(finish_task2_chunk1, (in,in)).
+directions(chunk1, (in,in)).
+directions(chunk2, (in,in)).
+directions(chunk3, (in,in)).
+directions(release_task1, (in,out)).
+directions(release_task2, (in,out)).
+directions(executionTime_task1_chunk1, (in,out)).
+directions(executionTime_task1_chunk2, (in,out)).
+directions(executionTime_task1_chunk3, (in,out)).
+directions(executionTime_task2_chunk1, (in,out)).
+directions(complete_task1, (in,out)).
+directions(complete_task2, (in,out)).
+directions(execute_task1_chunk1, (in,out)).
+directions(execute_task1_chunk2, (in,out)).
+directions(execute_task1_chunk3, (in,out)).
+directions(execute_task2_chunk1, (in,out)).
+directions(finish_task1_chunk1, (in,out)).
+directions(finish_task1_chunk2, (in,out)).
+directions(finish_task1_chunk3, (in,out)).
+directions(finish_task2_chunk1, (in,out)).
 
 %%% numerical predicates %%%
 numerical_pred(geq,2).

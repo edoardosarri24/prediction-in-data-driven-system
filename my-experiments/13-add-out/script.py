@@ -37,7 +37,7 @@ def augment_bias():
                         this_chunk = len(list(tasks_chunks[task]))
                         if (this_chunk > max_chunk):
                             max_chunk = this_chunk
-                    for chunk in range (max_chunk):
+                    for chunk in range(1,max_chunk+1):
                         new_line = re.sub(r"\bchunk\b", f"chunk{chunk}", line)
                         bias_elements.append(new_line)
                 # complete line

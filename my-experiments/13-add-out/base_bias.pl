@@ -21,6 +21,7 @@ type(finish_task_chunk,(releaseNumber_trace_task_chunk, int)).
 %%% direction %%%
 directions(failure, (in,)).
 directions(task, (in,in)).
+directions(chunk, (in,in)).
 directions(release_task, (in,out)).
 directions(executionTime_task_chunk, (in,out)).
 directions(complete_task, (in,out)).
