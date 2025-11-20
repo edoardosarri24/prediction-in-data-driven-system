@@ -2,7 +2,8 @@
 *Prediction in Data-Driven Systems* focuses on scenarios where only log data is available and the system model is unknown. The goal is to predict whether an execution trace will fail and identify the task responsible.
 
 ### Structure of repository
-.
+```
+prediction-in-data-driven-system
 ├── README.md
 ├── environment.yaml - the setup file for conda environment.
 ├── my-experiments - the folder contains my experiments.
@@ -11,6 +12,7 @@
 ├── real-time-scheduling-simulator - the simulator used to obtain the data from my GitHub.
 ├── relational program synthesis with numerical reasoning.pdf - the Numsynth article
 └── report - the complete report
+```
 
 ### Installation
 - Requirements
