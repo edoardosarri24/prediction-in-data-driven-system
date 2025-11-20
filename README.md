@@ -1,6 +1,17 @@
 # Prediction in Data-Driven System
 *Prediction in Data-Driven Systems* focuses on scenarios where only log data is available and the system model is unknown. The goal is to predict whether an execution trace will fail and identify the task responsible.
 
+### Structure of repository
+.
+├── README.md
+├── environment.yaml - the setup file for conda environment.
+├── my-experiments - the folder contains my experiments.
+├── numsynth - the numsynth code
+├── numsynth.sh - che bash script to execute a new experiment.
+├── real-time-scheduling-simulator - the simulator used to obtain the data from my GitHub.
+├── relational program synthesis with numerical reasoning.pdf - the Numsynth article
+└── report - the complete report
+
 ### Installation
 - Requirements
   - [SWI-Prolog](https://www.swi-prolog.org) (version 8.4.2 or above)
