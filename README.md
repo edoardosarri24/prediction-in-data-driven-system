@@ -11,7 +11,8 @@ prediction-in-data-driven-system
 ├── numsynth.sh - che bash script to execute a new experiment.
 ├── real-time-scheduling-simulator - the simulator used to obtain the data from my GitHub.
 ├── relational program synthesis with numerical reasoning.pdf - the Numsynth article
-└── report - the complete report
+├── report.pdf - the complete report
+└── report - the latex folder for the report
 ```
 
 ### Installation
